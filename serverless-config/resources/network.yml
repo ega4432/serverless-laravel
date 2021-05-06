@@ -1,0 +1,51 @@
+Resources:
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/24
+      Tags:
+        - { Key: Name, Value: Serverless Laravel VPC }
+  PrivateSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.0.0/25
+      AvailabilityZone: ap-northeast-1a
+      Tags:
+        - { Key: Name, Value: Serverless Laravel Private A }
+  PrivateSubnetC:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.0.128/25
+      AvailabilityZone: ap-northeast-1c
+      Tags:
+        - { Key: Name, Value: Serverless Laravel Private C }
+  LambdaSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SecurityGroup for Lambda Functions
+      VpcId: !Ref VPC
+      Tags:
+        - { Key: Name, Value: Serverless Laravel Lambda SG }
+  AuroraSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SecurityGroup for Aurora
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: ${self:custom.environments.DB_PORT}
+          ToPort: ${self:custom.environments.DB_PORT}
+          CidrIp: 10.0.0.0/24
+      Tags:
+        - { Key: Name, Value: Serverless Laravel Aurora SG }
+    DependsOn: VPC
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: "Serverless Laravel DB SG"
+      DBSubnetGroupName: serverless-laravel-db-sg
+      SubnetIds:
+        - !Ref PrivateSubnetA
+        - !Ref PrivateSubnetC
