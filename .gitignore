@@ -15,3 +15,6 @@ yarn-error.log
 # Serverless Framework
 serverless-config/env
 .serverless
+
+# Static assets
+/public/

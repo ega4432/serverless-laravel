@@ -16,3 +16,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/sample', function () {
+    return response()->json([
+        'message' => 'Hello World!'
+    ]);
+});
+
+Route::get('/users', function () {
+    return response()->json([
+        'user' => App\Models\User::get()->toArray()
+    ]);
+});
