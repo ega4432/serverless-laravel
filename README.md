@@ -92,8 +92,8 @@ alias bref="./vendor/bin/bref"
 
 ### Dynamic application
 
-Bia severless framework CLI to AWS Cloud.
-If you want to migrate or seed, use the Bref CLI.
+Bia [severless framework CLI](https://www.serverless.com/framework/docs/providers/aws/cli-reference/) to AWS Cloud.
+If you want to migrate or seed, use the [Bref CLI](https://bref.sh/docs/runtimes/console.html).
 
 ```sh
 $ seleverless deploy -v
@@ -108,6 +108,8 @@ $ ./vendor/bin/bref cli <artisan function> --region <region> -- db:seed
 ```
 
 ### Static assets
+
+Bia [AWS CLI](https://aws.amazon.com/cli/) to S3 bucket.
 
 ```sh
 $ ./vendor/bin/sail npm run prod

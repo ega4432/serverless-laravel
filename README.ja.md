@@ -4,14 +4,12 @@
 
 サーバーレス LAMP スタックのサンプルリポジトリです。
 
-Learn more about what a serverless lamp stack is, see this AWS blog.
 サーバーレス LAMP スタックについて詳しく知りたいという方は下記の AWS ブログの記事を参照ください。
 
 [新しいサーバーレス LAMP スタック – Part 1: 概要紹介 \| Amazon Web Services ブログ](https://aws.amazon.com/jp/blogs/news/introducing-the-new-serverless-lamp-stack/)
 
 ## セットアップ
 
-Build the Laravel environment on docker in our local machine with sail.
 [Laravel Sail](https://readouble.com/laravel/8.x/ja/sail.html) を使って環境構築を行います。Sail は、ローカルマシンで Laravel アプリケーションを開発するための Docker 環境を簡単に作ることができます。
 
 ```sh
@@ -94,8 +92,9 @@ alias bref="./vendor/bin/bref"
 
 ### 動的アプリケーション
 
-Serverless Framework CLI を使ってデプロイします。
-マイグレーションやシードを行いたい場合は、[Bref CLI]([Console commands \- Bref](https://bref.sh/docs/runtimes/console.html)) を使って行ます。
+[Serverless Framework CLI](https://www.serverless.com/framework/docs/providers/aws/cli-reference/) を使ってデプロイします。
+
+マイグレーションやシードを行いたい場合は、[Bref CLI](https://bref.sh/docs/runtimes/console.html) を使って行ます。
 
 ```sh
 $ seleverless deploy -v
@@ -111,7 +110,7 @@ $ ./vendor/bin/bref cli <artisan function> --region <region> -- db:seed
 
 ### 静的アセット
 
-AWS CLI を使って、S3 バケットにデプロイします。
+[AWS CLI](https://aws.amazon.com/jp/cli/) を使って、S3 バケットにデプロイします。
 
 ```sh
 $ ./vendor/bin/sail npm run prod
