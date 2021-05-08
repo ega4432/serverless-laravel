@@ -13,7 +13,7 @@ npm-debug.log
 yarn-error.log
 
 # Serverless Framework
-serverless-config/env
+serverless-config/env/*.yml
 .serverless
 
 # Static assets
