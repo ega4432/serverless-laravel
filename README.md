@@ -41,7 +41,6 @@ $ ./vendor/bin/sail composer require bref/bref bref/laravel-bridge
 $ ./vendor/bin/sail artisan vendor:publish --tag=serverless-config
 ```
 
-
 ## Local development
 
 Described how to execute commands that you will often use.
@@ -55,6 +54,12 @@ $ ./vendor/bin/sail artisan db:seed
 
 # install npm packages
 $ ./vendor/bin/sail npm i
+```
+
+Prepare env file.
+
+```sh
+$ cp ./serverless-config/env/stack.yml.example ./serverless-config/env/<your stack>.yml
 ```
 
 Customize your container settings.

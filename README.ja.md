@@ -57,6 +57,12 @@ $ ./vendor/bin/sail artisan db:seed
 $ ./vendor/bin/sail npm i
 ```
 
+環境変数用の yml ファイルを serverless framework のスタック名でコピーします。
+
+```sh
+$ cp ./serverless-config/env/stack.yml.example ./serverless-config/env/<your stack>.yml
+```
+
 Docker コンテナをカスタマイズしたくなったら、下記のように publish して Dockerfile を編集します。
 
 ```sh
