@@ -1,0 +1,38 @@
+Resources:
+  DBCluster:
+    Type: AWS::RDS::DBCluster
+    Properties:
+      DatabaseName: ${self:custom.environments.DB_DATABASE}
+      Engine: aurora-mysql
+      EngineMode: serverless
+      MasterUsername: ${self:custom.environments.DB_USER_NAME}
+      MasterUserPassword: ${self:custom.environments.DB_PASSWORD}
+      DBClusterParameterGroupName: !Ref DBClusterParameterGroup
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref AuroraSecurityGroup
+    DependsOn: DBSubnetGroup
+  DBClusterParameterGroup:
+    Type: AWS::RDS::DBClusterParameterGroup
+    Properties:
+      Description: A parameter group for aurora
+      Family: aurora-mysql5.7
+      Parameters:
+        time_zone: "Asia/Tokyo"
+        character_set_client: "utf8"
+        character_set_connection: "utf8"
+        character_set_database: "utf8"
+        character_set_results: "utf8"
+        character_set_server: "utf8"
+  AuroraSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: Serverless-Laravel/aurora
+      SecretString: '{"username":"${self:custom.environments.DB_USER_NAME}", "password":"${self:custom.environments.DB_PASSWORD}"}'
+  SecretTargetAttachment:
+    Type: AWS::SecretsManager::SecretTargetAttachment
+    Properties:
+      SecretId: !Ref AuroraSecret
+      TargetId: !Ref DBCluster
+      TargetType: "AWS::RDS::DBCluster"
+    DependsOn: DBCluster

@@ -1,0 +1,71 @@
+service: serverless-laravel
+
+provider:
+  name: aws
+  # The AWS region in which to deploy (us-east-1 is the default)
+  region: ${opt:region, self:custom.defaultRegion}
+  # The stage of the application, e.g. dev, production, staging… ('dev' is the default)
+  stage: ${opt:stage, self:custom.defaultStage}
+  runtime: provided.al2
+
+custom:
+  defaultStage: dev
+  defaultProfile: default
+  defaultRegion: ap-northeast-1
+  environments: ${file(./serverless-config/env/${opt:stage, self:custom.defaultStage}.yml)}
+
+package:
+  # Directories to exclude from deployment
+  exclude:
+    - node_modules/**
+    - public/storage
+    - resources/assets/**
+    - storage/**
+    - tests/**
+    - docker/**
+
+functions:
+  # This function runs the Laravel website/API
+  web:
+    handler: public/index.php
+    timeout: 28 # in seconds (API Gateway has a timeout of 29 seconds)
+    layers:
+      - ${bref:layer.php-74-fpm}
+    events:
+      - httpApi: '*'
+    vpc:
+      securityGroupIds:
+        - !Ref LambdaSecurityGroup
+      subnetIds:
+        - !Ref PrivateSubnetA
+        - !Ref PrivateSubnetC
+    environment:
+        DB_PORT: ${self:custom.environments.DB_PORT}
+        DB_HOST: !GetAtt DBCluster.Endpoint.Address
+        DB_PASSWORD: ${self:custom.environments.DB_PASSWORD}
+  # This function lets us run artisan commands in Lambda
+  artisan:
+    handler: artisan
+    timeout: 120 # in seconds
+    layers:
+      - ${bref:layer.php-74} # PHP
+      - ${bref:layer.console} # The "console" layer
+    vpc:
+      securityGroupIds:
+        - !Ref LambdaSecurityGroup
+      subnetIds:
+        - !Ref PrivateSubnetA
+        - !Ref PrivateSubnetC
+    environment:
+      DB_PORT: ${self:custom.environments.DB_PORT}
+      DB_HOST: !GetAtt DBCluster.Endpoint.Address
+      DB_PASSWORD: ${self:custom.environments.DB_PASSWORD}
+
+plugins:
+  # We need to include the Bref plugin
+  - ./vendor/bref/bref
+
+resources:
+  - ${file(./serverless-config/resources/s3.yml)}
+  - ${file(./serverless-config/resources/network.yml)}
+  - ${file(./serverless-config/resources/aurora.yml)}
