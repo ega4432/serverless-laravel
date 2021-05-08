@@ -1,6 +1,5 @@
 service: serverless-laravel
 
-useDotenv: true
 provider:
   name: aws
   # The AWS region in which to deploy (us-east-1 is the default)
@@ -23,6 +22,7 @@ package:
     - resources/assets/**
     - storage/**
     - tests/**
+    - docker/**
 
 functions:
   # This function runs the Laravel website/API
