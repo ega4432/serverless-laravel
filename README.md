@@ -1,5 +1,9 @@
 # Serverless Laravel
 
+[![automatic release](https://github.com/ysmtegsr/serverless-laravel/actions/workflows/release.yml/badge.svg)](https://github.com/ysmtegsr/serverless-laravel/actions/workflows/release.yml)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/ysmtegsr/serverless-laravel)
+![GitHub](https://img.shields.io/github/license/ysmtegsr/serverless-laravel)
+
 [ English | [Japanese](https://github.com/ysmtegsr/serverless-laravel/blob/main/README.ja.md) ]
 
 This is a sample repository of Serverless LAMP stack.
