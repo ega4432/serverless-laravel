@@ -4,6 +4,8 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/ysmtegsr/serverless-laravel)
 ![GitHub](https://img.shields.io/github/license/ysmtegsr/serverless-laravel)
 
+<img src="https://user-images.githubusercontent.com/38056766/118388287-833e2080-b65e-11eb-9e2a-4692f3c52e83.png" height="400px">
+
 [ English | [Japanese](https://github.com/ysmtegsr/serverless-laravel/blob/main/README.ja.md) ]
 
 This is a sample repository of Serverless LAMP stack.
